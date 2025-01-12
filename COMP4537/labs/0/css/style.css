@@ -1,0 +1,18 @@
+
+.entryLabel{
+    padding-bottom: 18px;
+}
+.inputs{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+.entry{
+    padding-bottom: 18px;
+}
+.buttonArea{
+    
+}
+
+
