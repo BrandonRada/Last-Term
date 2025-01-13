@@ -14,11 +14,9 @@ class Game{
     verifyEntry(){
         let numberEntry = document.getElementById("numberEntry");
         let enteredValue = numberEntry.value;
-        let allowedValue;
     
         if(enteredValue < 3 || enteredValue > 7){
-            alert(messages.invalidRange)
-            allowedValue = false;
+            alert(messages.invalidRange);
         }else{
             this.numberOfButtons = enteredValue;
             this.buttonManager.generateButtons(enteredValue);
