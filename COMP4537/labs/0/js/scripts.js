@@ -84,13 +84,13 @@ class ButtonManager{
     async scrambleButtons(){
         for(let i = 1; i <= this.game.numberOfButtons; i++){
             for(let j = 1; j <= this.game.numberOfButtons; j++){
-                let top = Math.random()*window.innerHeight;
-                let left = Math.random()*window.innerWidth;
+                let top = Math.random()*(window.innerHeight);
+                let left = Math.random()*(window.innerWidth);
                 let currentButton = document.getElementById(`button${j}`)
 
                 currentButton.style.position = "absolute";
-                currentButton.style.top = `${top}px`;
-                currentButton.style.left = `${left}px`;
+                currentButton.style.top = `${top - currentButton.clientHeight}px`;
+                currentButton.style.left = `${left - currentButton.clientWidth}px`;
     
             }
             await sleep(2000);
