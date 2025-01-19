@@ -1,3 +1,10 @@
-.note-area{
-    background-color: yellow;
+
+#note-area{
+    display: flex;
+    background-color: lightslategray;
+
+    height: 100px;
+    width: 100px;
+    justify-self: center;
+
 }
