@@ -15,6 +15,7 @@ textarea {
 
 #note-board{
     justify-self: center;
+    margin-top: 80px;
 }
 
 #notes-container{
