@@ -1,3 +1,5 @@
+//ChatGPT helped me with this.
+
 // Get the URL path
 const urlParams = window.location.pathname.split("/");
 
