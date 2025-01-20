@@ -1,6 +1,6 @@
 
 let noteID = localStorage.getItem("noteID") ? parseInt(localStorage.getItem("noteID")) : 0;
-let lastSavedTime = localStorage.getItem("lastSavedTime") ? `Stored at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
+let lastSavedTime = localStorage.getItem("lastSavedTime") ? `stored at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
 
 
 class Noteboard{
@@ -49,7 +49,7 @@ class Noteboard{
         this.lastSavedTimeElement.textContent = lastSavedTime;
     }
     updateTime(){
-        lastSavedTime = localStorage.getItem("lastSavedTime") ? `Stored at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
+        lastSavedTime = localStorage.getItem("lastSavedTime") ? `stored at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
         this.lastSavedTimeElement.textContent = lastSavedTime;
     }
 
@@ -115,7 +115,7 @@ class RemoveButton{
         const removeButton = document.createElement("button");
         removeButton.id = `remove-button-${this.id}`;
         removeButton.className = "remove-button";
-        removeButton.textContent = "Remove";
+        removeButton.textContent = "remove";
         removeButton.addEventListener("click", () => this.removeNote());
         return removeButton;
     }

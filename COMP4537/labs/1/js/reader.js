@@ -1,5 +1,5 @@
 let noteID = localStorage.getItem("noteID") ? parseInt(localStorage.getItem("noteID")) : 0;
-let lastSavedTime = localStorage.getItem("lastSavedTime") ? `Updated at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
+let lastSavedTime = localStorage.getItem("lastSavedTime") ? `updated at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
 
 
 class NoteBoard{
@@ -22,7 +22,7 @@ class NoteBoard{
         this.updateTime();
     }
     updateTime(){
-        lastSavedTime = localStorage.getItem("lastSavedTime") ? `Updated at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
+        lastSavedTime = localStorage.getItem("lastSavedTime") ? `updated at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
         this.lastUpdatedTimeElement.textContent = lastSavedTime;
     }
 
