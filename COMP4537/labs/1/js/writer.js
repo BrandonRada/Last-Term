@@ -38,11 +38,6 @@ class Noteboard{
             textContent: note.textContent
         }));
         localStorage.setItem("notes", JSON.stringify(DOMNotes));
-        // localStorage.setItem("notes", JSON.stringify(this.notes));
-        // this.lastSavedTime.textContent = `stored at: ${new Date().toLocaleTimeString()}`;
-        if(this.notes.nodeName === "undefined"){
-            this.notes = [];
-        }
     }
     loadNotes(){
         const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
@@ -69,6 +64,7 @@ class Note{
         // DOM note
         this.noteArea = document.createElement("div");
         this.noteArea.id = `note-area-${id}`;
+        this.noteArea.className = "note-area";
         this.noteTextElement = this.createNoteElement();
         // Remove button object
         this.removeButton = new RemoveButton(id, this.noteBoard);
@@ -84,9 +80,20 @@ class Note{
 
         textarea.value = this.textContent;
         textarea.id = `text-area-${this.id}`;
+
+        // We dont want the user to resize the note (Im assuming) and it looks like we need a size?
+        textarea.style.resize = "none";
+        textarea.style.width = "240px";
+        textarea.style.height = "100px";
+
+        
         textarea.addEventListener("input", () => {
             this.updateContent(textarea.value);
             this.noteBoard.updateLocalStorage();
+
+            // Update the time when user types in a note.
+            localStorage.setItem("lastSavedTime", new Date().toLocaleTimeString());
+            this.noteBoard.updateTime(); // Update the displayed time
         })
         return textarea;
     }
@@ -107,6 +114,7 @@ class RemoveButton{
     createButtonElement(){
         const removeButton = document.createElement("button");
         removeButton.id = `remove-button-${this.id}`;
+        removeButton.className = "remove-button";
         removeButton.textContent = "Remove";
         removeButton.addEventListener("click", () => this.removeNote());
         return removeButton;
@@ -121,8 +129,7 @@ class RemoveButton{
         this.noteBoard.updateLocalStorage();
 
         // Change the last updated time
-        localStorage.setItem("lastSavedTime", new Date().toLocaleTimeString())
-        // updateTime(this.noteBoard);
+        localStorage.setItem("lastSavedTime", new Date().toLocaleTimeString());
         this.noteBoard.updateTime();
     }
 }
