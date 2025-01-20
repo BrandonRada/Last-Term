@@ -1,7 +1,8 @@
+// Global variables to be used throughout the code.
 let noteID = localStorage.getItem("noteID") ? parseInt(localStorage.getItem("noteID")) : 0;
 let lastSavedTime = localStorage.getItem("lastSavedTime") ? `updated at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
 
-
+// Noteboard Is what holds and manages the notes.
 class NoteBoard{
     constructor(){
         this.notes = [];
@@ -10,6 +11,7 @@ class NoteBoard{
         
     }
 
+    // Loads the notes to the writer page.
     loadNotes(){
         this.notesContainer.innerHTML = '';
         const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
@@ -21,6 +23,8 @@ class NoteBoard{
         this.lastUpdatedTimeElement.textContent = lastSavedTime;
         this.updateTime();
     }
+
+    // Updates the time in local storage and on the screen.
     updateTime(){
         lastSavedTime = localStorage.getItem("lastSavedTime") ? `updated at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
         this.lastUpdatedTimeElement.textContent = lastSavedTime;
@@ -28,6 +32,7 @@ class NoteBoard{
 
 }
 
+// Note is a textarea.
 class Note{
     constructor(id, content = "", noteBoard){
         this.id = id;
@@ -44,6 +49,7 @@ class Note{
         this.noteArea.appendChild(this.noteTextElement);
     }
 
+    // Creates a DOM element for the textarea and adds an event listener for when the user types.
     createNoteElement() {
         const textarea = document.createElement("textarea");
 
@@ -63,6 +69,7 @@ class Note{
         return textarea;
     }
 
+    // Updates the content in the textarea.
     updateContent(newContent) {
         this.textContent = newContent;
         this.noteBoard.updateLocalStorage();
@@ -70,8 +77,10 @@ class Note{
 
 }
 
+// Create a notebook/veiwer.
 const noteViewer = new NoteBoard();
 
+// When the window is loaded, load the notes.
 window.addEventListener("load", () => {
     noteViewer.loadNotes();
 });

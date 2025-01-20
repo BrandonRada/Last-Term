@@ -1,8 +1,8 @@
-
+// Global variables to be used throughout the code.
 let noteID = localStorage.getItem("noteID") ? parseInt(localStorage.getItem("noteID")) : 0;
 let lastSavedTime = localStorage.getItem("lastSavedTime") ? `stored at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
 
-
+// Noteboard Is what holds and manages the notes.
 class Noteboard{
     constructor(){
         this.notes = [];
@@ -12,6 +12,7 @@ class Noteboard{
         
         this.createAddNoteButton();
     }
+    // Creates the add note button and its functionality.
     createAddNoteButton(){
         this.addButton.addEventListener("click", () => {
             noteID++;
@@ -32,6 +33,7 @@ class Noteboard{
         });
     }
 
+    // Updates the local storage with the notes created.
     updateLocalStorage(){
         const DOMNotes = this.notes.map(note => ({
             id: note.id,
@@ -39,6 +41,8 @@ class Noteboard{
         }));
         localStorage.setItem("notes", JSON.stringify(DOMNotes));
     }
+
+    // Loads the notes to the writer page. 
     loadNotes(){
         const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
         savedNotes.forEach(savedNote => {
@@ -48,6 +52,8 @@ class Noteboard{
         });
         this.lastSavedTimeElement.textContent = lastSavedTime;
     }
+
+    // Updates the time in local storage and on the screen.
     updateTime(){
         lastSavedTime = localStorage.getItem("lastSavedTime") ? `stored at: ${localStorage.getItem("lastSavedTime")}` : "Not saved";
         this.lastSavedTimeElement.textContent = lastSavedTime;
@@ -55,6 +61,7 @@ class Noteboard{
 
 }
 
+// Note is a textarea and a remove button combined.
 class Note{
     constructor(id, content = "", noteBoard){
         this.id = id;
@@ -75,6 +82,7 @@ class Note{
         this.noteArea.appendChild(this.removeButton.buttonElement);
     }
 
+    // Creates a DOM element for the textarea and adds an event listener for when the user types.
     createNoteElement() {
         const textarea = document.createElement("textarea");
 
@@ -98,6 +106,7 @@ class Note{
         return textarea;
     }
 
+    // Updates the content in the textarea.
     updateContent(newContent) {
         this.textContent = newContent;
         this.noteBoard.updateLocalStorage();
@@ -105,12 +114,15 @@ class Note{
 
 }
 
+// A remove button. This class handles the creation of a button element and removing the Note object from the notes list, local storage, and window.
 class RemoveButton{
     constructor(id, noteBoard){
         this.id = id;
         this.noteBoard = noteBoard;
         this.buttonElement = this.createButtonElement();
     }
+
+    // Creation of the button element is handled here, adding a on click event listener.
     createButtonElement(){
         const removeButton = document.createElement("button");
         removeButton.id = `remove-button-${this.id}`;
@@ -120,6 +132,7 @@ class RemoveButton{
         return removeButton;
     }
 
+    // Handles the removal of the Note object from the notes list, local storage, and window.
     removeNote(){
         const noteElement = document.getElementById(`note-area-${this.id}`);
         if (noteElement) noteElement.remove();
@@ -134,8 +147,10 @@ class RemoveButton{
     }
 }
 
+// Create a notebook.
 const noteboard = new Noteboard();
 
+// When the window is loaded, load the notes.
 window.addEventListener("load", () => {
     noteboard.loadNotes();
 });
