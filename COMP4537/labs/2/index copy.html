@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lab 1: JSON, Object Constructor, localStorage</title>
+        <link rel="stylesheet" href="./css/style.css">
+    </head>
+    <body>
+        <script>
+            // for(let i = 0; i < 10000; i++){console.log(i)} setTimeout(1,alert("done")); 
+            const http = require('http');
+            http.createServer(function(req, res){
+                console.log("Hi");
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.end('Hello <b>World!</b>');
+            }).listen(8888)
+
+            console.log('Server si running and listening ...');
+        </script>
+    </body>
+</html>
