@@ -1,0 +1,19 @@
+{
+    "name": "first-project",                         
+    "version": "1.0.0",                      
+    "description": "A Node.js server app",   
+    "main": "server.js",                     
+    "scripts": {
+      "start": "node server.js",             
+      "dev": "nodemon server.js"             
+    },
+    "dependencies": {
+      "express": "^4.17.1"                   
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.4"                    
+    },
+    "license": "MIT",                        
+    "author": "Your Name",                   
+    "keywords": ["node", "server", "app"]   
+  }
