@@ -11,13 +11,13 @@ http.createServer(function (req, res){
 
     res.writeHead(200, { 'Content-Type': 'text/html' });
     
-    if(pathname === "COMP4537/labs/3/getDate" && query.name){
+    if(pathname === "/COMP4537/labs/3/getDate" && query.name){
         const serverTime = utils.getDate();
-        const responseMessage = `<p style="color:blue;">${messages.greetingMessage.replace("%1", query.name)} ${serverTime}</>`;
+        const responseMessage = `<p style="color:blue;">${messages.greetingMessage.replace("%1", query.name)} ${serverTime}</p>`;
         res.end(responseMessage);
     } else{
         res.writeHead(404, {'Content-Type': 'text/html'});
-        res.end("<p> style='color:red;' 404 - Not Found</p>");
+        res.end("<p style='color:red;'> 404 - Not Found</p>");
     }
 }).listen(PORT);
 console.log(`Server running and listening on port ${PORT}`);
