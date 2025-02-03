@@ -2,7 +2,7 @@ const http = require('http');
 const url = require('url');
 const utils = require('../modules/utils');
 const messages = require('../lang/messages/en/user');
-const PORT = 8888;
+const PORT = 8080;
 
 http.createServer(function (req, res){
     const parsedURL = url.parse(req.url, true);
