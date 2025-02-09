@@ -1,14 +1,9 @@
-
-
-
 class Dictionary{
     constructor(){
-        this.submitButton = document.getElementById("submit-button");
         this.searchButton = document.getElementById("search-button");
         this.addClickEvents();
     }
     addClickEvents(){
-        this.submitButton.addEventListener("click", this.storeDefinition);
         this.searchButton.addEventListener("click", this.searchDefinition);
     }
 
@@ -49,4 +44,3 @@ class Dictionary{
 
 
 const dictionary = new Dictionary();
-
