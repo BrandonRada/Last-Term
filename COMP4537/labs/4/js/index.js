@@ -9,7 +9,7 @@ class Dictionary{
     }
     addClickEvents(){
         this.submitButton.addEventListener("click", this.storeDefinition);
-        this.submitButton.addEventListener("click", this.searchDefinition);
+        this.searchButton.addEventListener("click", this.searchDefinition);
     }
 
 
