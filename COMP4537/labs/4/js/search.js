@@ -1,4 +1,4 @@
-import { messages } from '../lang/messages/en/user';
+import { messages } from '../lang/messages/en/user.js';
 class Dictionary{
     constructor(){
         this.searchButton = document.getElementById("search-button");
