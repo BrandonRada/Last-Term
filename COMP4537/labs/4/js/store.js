@@ -8,6 +8,7 @@ class Dictionary {
         this.submitButton.addEventListener("click", () => this.storeDefinition());
     }
 
+    // I got this from ChatGPT as I was not sure how to allow only letters and certain symbols for the word and definition.
     isValidInput(word, definition) {
         const wordRegex = /^[A-Za-z\s-]+$/; // Allows only letters, spaces, and hyphens
         const definitionRegex = /^[A-Za-z\s.,-]+$/; // Allows letters, spaces, periods, commas, and hyphens
