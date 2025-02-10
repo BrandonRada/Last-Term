@@ -18,7 +18,7 @@ class Dictionary{
         
         xhttp.open("GET", url, true);
         xhttp.onreadystatechange = function () {
-            if (xhttp.readyState === 4 && !response.error && (xhttp.status === 200 || xhttp.status === 201)) {
+            if (xhttp.readyState === 4 && (xhttp.status === 200 || xhttp.status === 201)) {
                 const response = JSON.parse(xhttp.responseText);
                 document.getElementById("searchResult").textContent = response.word + ": " + response.definition;
             }else{
