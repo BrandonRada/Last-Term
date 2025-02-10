@@ -1,63 +1,73 @@
-// const http = require("http");
-// const url = require("url");
+// Code attribution: Copilot (https://copilot.microsoft.com/) was used to develop solutions presented in this assignment. This includes verifying that code met requirements, analyzing errors, checking/looking up syntax, and summarizing requirements.
+'use strict';
+const http = require('http');
+const url = require('url');
+const msg = require('./lang/messages/en/responseMsg');
 
-// let dictionary = []; // Stores word-definition pairs
-// let requestCount = 0; // Track total requests
+let dictionary = [];
+let requestCount = 0;
 
-// const server = http.createServer((req, res) => {
-//     requestCount++;
-//     const parsedUrl = url.parse(req.url, true);
+class Lab4Controller
+{
+    static createDefinition(req, res)
+    {
+        let body = '';
+        req.on('data', chunk => body += chunk.toString());
+        req.on('end', () =>
+        {
+            const { word, definition } = JSON.parse(body);
+            if (!definition || definition.trim() === '')
+                return res.writeHead(400, { 'Content-Type': 'application/json' }).end(JSON.stringify({ message: msg.defUndefined }));
 
-//     if (req.method === "GET" && parsedUrl.pathname === "/api/definitions") {
-//         const queryWord = parsedUrl.query.word;
-//         if (!queryWord) {
-//             res.writeHead(400, { "Content-Type": "application/json" });
-//             res.end(JSON.stringify({ error: "Missing 'word' query parameter." }));
-//             return;
-//         }
+            if (!word || word.trim() === '')
+                return res.writeHead(400, { 'Content-Type': 'application/json' }).end(JSON.stringify({ message: msg.wordUndefined }));
 
-//         const entry = dictionary.find((entry) => entry.word === queryWord);
-//         res.writeHead(200, { "Content-Type": "application/json" });
-//         res.end(JSON.stringify({
-//             requestCount,
-//             definition: entry ? entry.definition : `Word '${queryWord}' not found!`
-//         }));
+            if (/\d/.test(word) || /\d/.test(definition))
+                return res.writeHead(400, { 'Content-Type': 'application/json' }).end(JSON.stringify({ message: msg.noNumbers }));
 
-//     } else if (req.method === "POST" && parsedUrl.pathname === "/api/definitions") {
-//         let body = "";
+            if (dictionary.find(item => item.word === word))
+                return res.writeHead(409, { 'Content-Type': 'application/json' }).end(JSON.stringify({ message: msg.alreadyExists.replace('%1', word) }));
 
-//         req.on("data", chunk => { body += chunk.toString(); });
-//         req.on("end", () => {
-//             try {
-//                 const data = JSON.parse(body);
-//                 if (!data.word || !data.definition || typeof data.word !== "string" || typeof data.definition !== "string") {
-//                     throw new Error("Invalid input. Both 'word' and 'definition' must be non-empty strings.");
-//                 }
+            dictionary.push({ word, definition });
 
-//                 if (dictionary.some(entry => entry.word === data.word)) {
-//                     res.writeHead(409, { "Content-Type": "application/json" });
-//                     res.end(JSON.stringify({ message: `Warning! '${data.word}' already exists.` }));
-//                     return;
-//                 }
+            requestCount++;
 
-//                 dictionary.push({ word: data.word, definition: data.definition });
+            res.writeHead(201, { 'Content-Type': 'application/json' }).end(JSON.stringify({ message: msg.newEntry.replace('%1', word).replace('%2', definition), requestCount, totalEntries: dictionary.length, date: new Date() }));
+        });
+    }
 
-//                 res.writeHead(201, { "Content-Type": "application/json" });
-//                 res.end(JSON.stringify({
-//                     requestCount,
-//                     totalEntries: dictionary.length,
-//                     message: `New entry recorded: "${data.word} : ${data.definition}"`
-//                 }));
-//             } catch (error) {
-//                 res.writeHead(400, { "Content-Type": "application/json" });
-//                 res.end(JSON.stringify({ error: error.message }));
-//             }
-//         });
+    static getDefinition(req, res)
+    {
+        const queryObject = url.parse(req.url, true).query;
+        const word = queryObject.word;
+        const entry = dictionary.find(item => item.word === word);
 
-//     } else {
-//         res.writeHead(404, { "Content-Type": "application/json" });
-//         res.end(JSON.stringify({ error: "Endpoint not found." }));
-//     }
-// });
+        requestCount++;
 
-// server.listen(8080, () => console.log("API Server running on port 8080"));
+        if (entry)
+            res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify({ word: entry.word, definition: entry.definition, requestCount }));
+        else
+            res.writeHead(404, { 'Content-Type': 'application/json' }).end(JSON.stringify({ message: msg.notFound.replace('%1', word), requestCount }));
+    }
+
+    static handleUnsupportedMethod = (req, res) => res.writeHead(405, { 'Content-Type': 'application/json' }).end(JSON.stringify({ message: msg.methodNotAllowed.replace('%1', req.method) }));
+}
+
+const server = http.createServer((req, res) =>
+{
+    const parsedUrl = url.parse(req.url, true);
+    console.log(`Received ${ req.method } request for ${ parsedUrl.pathname }`);
+
+    if (!parsedUrl.pathname.startsWith('/api/definitions'))
+        return res.writeHead(404, { 'Content-Type': 'text/html' }).end(`<h1>${msg.four04}</h1>`);
+
+    if (req.method === 'POST')
+        Lab4Controller.createDefinition(req, res);
+    else if (req.method === 'GET')
+        Lab4Controller.getDefinition(req, res);
+    else
+        Lab4Controller.handleUnsupportedMethod(req, res);
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => console.log(`Server running on port ${ PORT }`));

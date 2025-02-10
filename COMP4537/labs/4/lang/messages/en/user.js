@@ -1,5 +1,3 @@
-//Unused for lab 1.
-
 module.exports = {
     messages: {
         missingWordOrDefinition: "Error: Word and definition are required.",
