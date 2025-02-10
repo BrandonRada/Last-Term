@@ -30,31 +30,60 @@ class Dictionary{
     //     .catch(err => document.getElementById("result").textContent = "Error connecting to server.");
     // }
 
+    // storeDefinition() {
+    //     const word = document.getElementById("word").value.trim();
+    //     const definition = document.getElementById("definition").value.trim();
+
+    //     if (!word || !definition) {
+    //         document.getElementById("result").textContent = "Error: Word and definition are required.";
+    //         return;
+    //     }
+
+    //     const xhttp = new XMLHttpRequest();
+    //     const url = "https://exo-engine.com/COMP4537/labs/4/api/definitions";
+    //     const params = `word=${encodeURIComponent(word)}&definition=${encodeURIComponent(definition)}`;
+
+    //     xhttp.open("POST", url, true);
+    //     // xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    //     xhttp.setRequestHeader("Content-Type", "application/json");
+
+    //     xhttp.onreadystatechange = function () {
+    //         if (xhttp.readyState === 4 && xhttp.status === 200) {
+    //             const response = JSON.parse(xhttp.responseText);
+    //             document.getElementById("result").textContent = response.message || response.error;
+    //         }
+    //     };
+        
+    //     xhttp.send(params);
+    // }
     storeDefinition() {
         const word = document.getElementById("word").value.trim();
         const definition = document.getElementById("definition").value.trim();
-
+    
         if (!word || !definition) {
             document.getElementById("result").textContent = "Error: Word and definition are required.";
             return;
         }
-
+    
         const xhttp = new XMLHttpRequest();
         const url = "https://exo-engine.com/COMP4537/labs/4/api/definitions";
-        const params = `word=${encodeURIComponent(word)}&definition=${encodeURIComponent(definition)}`;
-
+        const data = JSON.stringify({ word, definition }); // Convert to JSON string
+    
         xhttp.open("POST", url, true);
-        // xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhttp.setRequestHeader("Content-Type", "application/json");
-
+    
         xhttp.onreadystatechange = function () {
-            if (xhttp.readyState === 4 && xhttp.status === 200) {
-                const response = JSON.parse(xhttp.responseText);
-                document.getElementById("result").textContent = response.message || response.error;
+            if (xhttp.readyState === 4) {
+                try {
+                    const response = JSON.parse(xhttp.responseText);
+                    document.getElementById("result").textContent = response.message || response.error;
+                } catch (err) {
+                    document.getElementById("result").textContent = "Unexpected server response.";
+                }
             }
         };
         
-        xhttp.send(params);
+        xhttp.send(data); // Send JSON string
     }
 
 }
