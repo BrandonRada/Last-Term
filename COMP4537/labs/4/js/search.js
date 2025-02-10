@@ -1,3 +1,4 @@
+const messages = require('../lang/messages/en/user');
 class Dictionary{
     constructor(){
         this.searchButton = document.getElementById("search-button");
@@ -9,7 +10,7 @@ class Dictionary{
     searchDefinition() {
         const word = document.getElementById("searchWord").value.trim();
         if (!word) {
-            document.getElementById("searchResult").textContent = "Please enter a word to search.";
+            document.getElementById("searchResult").textContent = `${messages.missingSearchWord}`;
             return;
         }
 
@@ -20,10 +21,10 @@ class Dictionary{
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState === 4 && (xhttp.status === 200 || xhttp.status === 201)) {
                 const response = JSON.parse(xhttp.responseText);
-                document.getElementById("searchResult").textContent = response.word + ": " + response.definition;
+                document.getElementById("searchResult").textContent = `${messages.missingSearchWord.replace("%1",response.word).replace("%2", response.definition)}`;
             }else{
                 const response = JSON.parse(xhttp.responseText);
-                document.getElementById("searchResult").textContent = `Request# ${response.requestCount} ${response.message}`;
+                document.getElementById("searchResult").textContent = `${messages.requestError.replace("%1", response.requestCount).replace("%2", response.message)}`;
             }
         };
         xhttp.send();

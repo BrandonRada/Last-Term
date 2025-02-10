@@ -1,3 +1,4 @@
+const messages = require('../lang/messages/en/user');
 class Dictionary {
     constructor() {
         this.submitButton = document.getElementById("submit-button");
@@ -14,15 +15,15 @@ class Dictionary {
         const definitionRegex = /^[A-Za-z\s.,-]+$/; // Allows letters, spaces, periods, commas, and hyphens
 
         if (!word || !definition) {
-            document.getElementById("result").textContent = "Error: Word and definition are required.";
+            document.getElementById("result").textContent = `${messages.missingWordOrDefinition}`;
             return false;
         }
         if (!wordRegex.test(word)) {
-            document.getElementById("result").textContent = "Error: Word can only contain letters, spaces, and hyphens.";
+            document.getElementById("result").textContent = `${messages.invalidWord}`;
             return false;
         }
         if (!definitionRegex.test(definition)) {
-            document.getElementById("result").textContent = "Error: Definition can only contain letters, spaces, periods, commas, and hyphens.";
+            document.getElementById("result").textContent = `${messages.invalidDefinition}`;
             return false;
         }
         return true;
@@ -50,11 +51,11 @@ class Dictionary {
                     if (xhttp.status === 400 || xhttp.status === 409) {
                         document.getElementById("result").textContent = response.message;
                     } else {
-                        document.getElementById("result").textContent = `Request #${response.requestCount} ${response.message} Updated on ${response.date}. ${response.totalEntries} total entries.`;
+                        document.getElementById("result").textContent = `${messages.requestSuccess.replace("%1", response.requestCount).replace("%2", response.message).replace("%3", response.date).replace("%4", response.totalEntries)}`;
                     }
                 } catch (err) {
                     console.log("Caught err");
-                    document.getElementById("result").textContent = "Unexpected server response.";
+                    document.getElementById("result").textContent = `${messages.unexpectedResponse}`;
                 }
             }
         };
