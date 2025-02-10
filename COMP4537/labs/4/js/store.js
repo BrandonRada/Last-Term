@@ -39,21 +39,21 @@ class Dictionary{
             return;
         }
 
-        const xhr = new XMLHttpRequest();
+        const xhttp = new XMLHttpRequest();
         const url = "https://exo-engine.com/COMP4537/labs/4/api/definitions";
         const params = `word=${encodeURIComponent(word)}&definition=${encodeURIComponent(definition)}`;
 
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhttp.open("POST", url, true);
+        xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                const response = JSON.parse(xhttp.responseText);
                 document.getElementById("result").textContent = response.message || response.error;
             }
         };
         
-        xhr.send(params);
+        xhttp.send(params);
     }
 
 }

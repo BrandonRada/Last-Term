@@ -26,17 +26,17 @@ class Dictionary{
             return;
         }
 
-        const xhr = new XMLHttpRequest();
+        const xhttp = new XMLHttpRequest();
         const url = `https://exo-engine.com/COMP4537/labs/4/api/definitions/?word=${word}`;
         
-        xhr.open("GET", url, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
+        xhttp.open("GET", url, true);
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                const response = JSON.parse(xhttp.responseText);
                 document.getElementById("searchResult").textContent = response.definition || response.error;
             }
         };
-        xhr.send();
+        xhttp.send();
     }
 
 }
