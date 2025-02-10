@@ -6,19 +6,6 @@ class Dictionary{
     addClickEvents(){
         this.searchButton.addEventListener("click", this.searchDefinition);
     }
-
-    // searchDefinition() {
-    //     const word = document.getElementById("searchWord").value.trim();
-    //     if (!word) {
-    //         document.getElementById("searchResult").textContent = "Please enter a word to search.";
-    //         return;
-    //     }
-
-    //     fetch(`https://exo-engine.com/COMP4537/labs/4/api/definitions/?word=${word}`)
-    //     .then(response => response.json())
-    //     .then(data => document.getElementById("searchResult").textContent = data.definition || data.error)
-    //     .catch(err => document.getElementById("searchResult").textContent = "Error connecting to server.");
-    // }
     searchDefinition() {
         const word = document.getElementById("searchWord").value.trim();
         if (!word) {
@@ -33,8 +20,10 @@ class Dictionary{
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState === 4 && xhttp.status === 200) {
                 const response = JSON.parse(xhttp.responseText);
-                document.getElementById("searchResult").textContent = response.definition || response.error;
-                console.log(response.dictionary + ":  " + response.definition);
+                document.getElementById("searchResult").textContent = response.word + ": " + response.definition  || response.error;
+            }else{
+                const response = JSON.parse(xhttp.responseText);
+                document.getElementById("searchResult").textContent = `Request# ${response.requestCount} ${response.message}`  || response.error;
             }
         };
         xhttp.send();
