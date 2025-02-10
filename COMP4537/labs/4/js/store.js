@@ -10,12 +10,18 @@ class Dictionary {
 
     isValidInput(word, definition) {
         const wordRegex = /^[A-Za-z\s-]+$/; // Allows only letters, spaces, and hyphens
+        const definitionRegex = /^[A-Za-z\s.,-]+$/; // Allows letters, spaces, periods, commas, and hyphens
+
         if (!word || !definition) {
             document.getElementById("result").textContent = "Error: Word and definition are required.";
             return false;
         }
         if (!wordRegex.test(word)) {
             document.getElementById("result").textContent = "Error: Word can only contain letters, spaces, and hyphens.";
+            return false;
+        }
+        if (!definitionRegex.test(definition)) {
+            document.getElementById("result").textContent = "Error: Definition can only contain letters, spaces, periods, commas, and hyphens.";
             return false;
         }
         return true;
