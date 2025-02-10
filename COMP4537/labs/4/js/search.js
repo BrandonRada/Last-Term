@@ -21,7 +21,7 @@ class Dictionary{
             if (xhttp.readyState === 4 && xhttp.status === 200) {
                 const response = JSON.parse(xhttp.responseText);
                 document.getElementById("searchResult").textContent = response.word + ": " + response.definition  || response.error;
-            }else{
+            }else if (xhttp.status === 404){
                 const response = JSON.parse(xhttp.responseText);
                 document.getElementById("searchResult").textContent = `Request# ${response.requestCount} ${response.message}`  || response.error;
             }

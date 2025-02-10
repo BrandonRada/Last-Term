@@ -21,7 +21,7 @@ class Dictionary{
     
         const xhttp = new XMLHttpRequest();
         const url = "https://exo-engine.com/COMP4537/labs/4/api/definitions";
-        const data = JSON.stringify({ word, definition }); // Convert to JSON string
+        const data = JSON.stringify({ word, definition });
     
         xhttp.open("POST", url, true);
         xhttp.setRequestHeader("Content-Type", "application/json");
