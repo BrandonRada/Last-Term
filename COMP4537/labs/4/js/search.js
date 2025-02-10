@@ -34,6 +34,7 @@ class Dictionary{
             if (xhttp.readyState === 4 && xhttp.status === 200) {
                 const response = JSON.parse(xhttp.responseText);
                 document.getElementById("searchResult").textContent = response.definition || response.error;
+                console.log(response.dictionary + ":  " + response.definition);
             }
         };
         xhttp.send();
