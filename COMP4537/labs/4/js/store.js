@@ -31,7 +31,7 @@ class Dictionary{
                 try {
                     const response = JSON.parse(xhttp.responseText);
                     if (xhttp.status === 400 || xhttp.status === 409) {
-                        document.getElementById("result").textContent = response.message; // Use 'message' here
+                        document.getElementById("result").textContent = response.message;
                     } else {
                         document.getElementById("result").textContent = `${xhttp.status} Request #${response.requestCount} ${response.message} Updated on ${response.date}. ${response.totalEntries} total entries.`;
                     }
@@ -42,7 +42,7 @@ class Dictionary{
             }
         };
         
-        xhttp.send(data); // Send JSON string
+        xhttp.send(data);
     }
 
 }
