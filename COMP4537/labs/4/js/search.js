@@ -14,7 +14,7 @@ class Dictionary{
             return;
         }
 
-        fetch(`https://exo-engine.com/COMP4537/labs/4/api/definitions?word=${word}`)
+        fetch(`https://exo-engine.com/COMP4537/labs/4/api/definitions/?word=${word}`)
         .then(response => response.json())
         .then(data => document.getElementById("searchResult").textContent = data.definition || data.error)
         .catch(err => document.getElementById("searchResult").textContent = "Error connecting to server.");
