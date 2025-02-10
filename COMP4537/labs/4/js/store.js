@@ -20,7 +20,7 @@ class Dictionary{
             return;
         }
     
-        fetch("https://yourDomainName2.wyz/api/definitions", {
+        fetch("https://exo-engine.com/COMP4537/labs/4/api/definitions", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ word, definition })
@@ -28,19 +28,6 @@ class Dictionary{
         .then(response => response.json())
         .then(data => document.getElementById("result").textContent = data.message || data.error)
         .catch(err => document.getElementById("result").textContent = "Error connecting to server.");
-    }
-
-    searchDefinition() {
-        const word = document.getElementById("searchWord").value.trim();
-        if (!word) {
-            document.getElementById("searchResult").textContent = "Please enter a word to search.";
-            return;
-        }
-
-        fetch(`https://yourDomainName2.wyz/api/definitions?word=${word}`)
-        .then(response => response.json())
-        .then(data => document.getElementById("searchResult").textContent = data.definition || data.error)
-        .catch(err => document.getElementById("searchResult").textContent = "Error connecting to server.");
     }
 
 }
