@@ -2,7 +2,7 @@
 'use strict';
 const http = require('http');
 const url = require('url');
-const msg = require('./lang/messages/en/responseMsg');
+const msg = require('../lang/messages/en/responseMsg');
 
 let dictionary = [];
 let requestCount = 0;
