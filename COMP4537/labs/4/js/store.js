@@ -44,7 +44,8 @@ class Dictionary{
         const params = `word=${encodeURIComponent(word)}&definition=${encodeURIComponent(definition)}`;
 
         xhttp.open("POST", url, true);
-        xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        // xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhttp.setRequestHeader("Content-Type", "application/json");
 
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState === 4 && xhttp.status === 200) {
