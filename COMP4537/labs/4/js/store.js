@@ -30,8 +30,8 @@ class Dictionary{
             if (xhttp.readyState === 4) {
                 try {
                     const response = JSON.parse(xhttp.responseText);
-                    if (xhttp.status === 200 || xhttp.status === 201){
-                        document.getElementById("result").textContent = `Request # ${response.requestCount} ${response.message} Updated on ${response.date}. ${response.totalEntries} total entries` || response.error;
+                    if (!response.error && (xhttp.status === 200 || xhttp.status === 201)){
+                        document.getElementById("result").textContent = `Request # ${response.requestCount} ${response.message} Updated on ${response.date}. ${response.totalEntries} total entries`;
                     } else{
                         document.getElementById("result").textContent = response.error;
                     }

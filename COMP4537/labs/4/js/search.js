@@ -18,12 +18,12 @@ class Dictionary{
         
         xhttp.open("GET", url, true);
         xhttp.onreadystatechange = function () {
-            if (xhttp.readyState === 4 && xhttp.status === 200) {
+            if (xhttp.readyState === 4 && !response.error && (xhttp.status === 200 || xhttp.status === 201)) {
                 const response = JSON.parse(xhttp.responseText);
-                document.getElementById("searchResult").textContent = response.word + ": " + response.definition  || response.error;
-            }else if (xhttp.status === 404){
+                document.getElementById("searchResult").textContent = response.word + ": " + response.definition;
+            }else{
                 const response = JSON.parse(xhttp.responseText);
-                document.getElementById("searchResult").textContent = `Request# ${response.requestCount} ${response.message}`  || response.error;
+                document.getElementById("searchResult").textContent = `Request# ${response.requestCount} ${response.message}`;
             }
         };
         xhttp.send();
