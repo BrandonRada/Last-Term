@@ -1,4 +1,4 @@
-const messages = require('../lang/messages/en/user');
+import { messages } from '../lang/messages/en/user';
 class Dictionary{
     constructor(){
         this.searchButton = document.getElementById("search-button");
