@@ -33,7 +33,7 @@ class Dictionary{
                     if ((xhttp.status === 400 || xhttp.status === 409)){
                         document.getElementById("result").textContent = response.error;
                     } else{
-                        document.getElementById("result").textContent = `Request # ${response.requestCount} ${response.message} Updated on ${response.date}. ${response.totalEntries} total entries.`;
+                        document.getElementById("result").textContent = `${xhttp.status} Request # ${response.requestCount} ${response.message} Updated on ${response.date}. ${response.totalEntries} total entries.`;
                     }
                 } catch (err) {
                     console.log("Caught err");
