@@ -26,6 +26,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Info</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <h1>Patient Information</h1>
@@ -67,7 +81,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                responseDiv.textContent = JSON.stringify(data, null, 2);
+                displayTable(data);
             })
             .catch(error => console.error('Error:', error));
         });
@@ -87,10 +101,46 @@
             fetch(url, options)
             .then(response => response.json())
             .then(data => {
-                responseDiv.textContent = JSON.stringify(data, null, 2);
+                if (method === 'GET') {
+                    displayTable(data);
+                } else {
+                    responseDiv.textContent = JSON.stringify(data, null, 2);
+                }
             })
             .catch(error => console.error('Error:', error));
         });
+
+        function displayTable(data) {
+            if (!Array.isArray(data) || data.length === 0) {
+                responseDiv.textContent = 'No data available';
+                return;
+            }
+            
+            const table = document.createElement('table');
+            const thead = table.createTHead();
+            const tbody = table.createTBody();
+            const headerRow = thead.insertRow();
+
+            // Create table headers
+            Object.keys(data[0]).forEach(key => {
+                const th = document.createElement('th');
+                th.textContent = key;
+                headerRow.appendChild(th);
+            });
+
+            // Create table rows
+            data.forEach(row => {
+                const tr = tbody.insertRow();
+                Object.values(row).forEach(value => {
+                    const td = tr.insertCell();
+                    td.textContent = value;
+                });
+            });
+
+            // Clear previous content and display table
+            responseDiv.innerHTML = '';
+            responseDiv.appendChild(table);
+        }
     </script>
 </body>
 </html>
