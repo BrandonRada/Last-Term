@@ -1,9 +1,12 @@
-#word{
-    height: 40px;
-    width: 100px;
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
-
-#definition{
-    height: 40px;
-    width: 200px;
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
 }

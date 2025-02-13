@@ -1,45 +1,10 @@
-<!-- Server1 code: server1/index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Patient Info</title>
-</head>
-<body>
-    <h1>Patient Information</h1>
-    <button id="insertDataBtn">Insert Data</button>
-    <br><br>
-    <textarea id="sqlQuery" rows="4" cols="50"></textarea>
-    <br>
-    <button id="submitQueryBtn">Submit Query</button>
-    <div id="response"></div>
-    
-    <script  type="module" src="./lang/messages/en/user.js"></script>
-    <script  type="module" src="./js/index.js"></script>
-</body>
-</html> -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Info</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
 <body>
     <h1>Patient Information</h1>
@@ -51,96 +16,7 @@
     <button id="submitQueryBtn">Submit Query</button>
     <div id="response"></div>
     
-    <script>
-        const insertDataBtn = document.getElementById('insertDataBtn');
-        const displayDataBtn = document.getElementById('displayDataBtn');
-        const submitQueryBtn = document.getElementById('submitQueryBtn');
-        const responseDiv = document.getElementById('response');
+    <script  type="module" src="./js/index.js"></script>
 
-        insertDataBtn.addEventListener('click', () => {
-            const data = {
-                query: `INSERT INTO patient (name, age, gender, \`condition\`) VALUES ('John Doe', 30, 'Male', 'Healthy'), ('Jane Smith', 28, 'Female', 'Healthy')`
-            };
-
-            fetch('https://exo-engine.com/COMP4537/labs/5/api/v1/sql', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                responseDiv.textContent = data.message;
-            })
-            .catch(error => console.error('Error:', error));
-        });
-
-        displayDataBtn.addEventListener('click', () => {
-            fetch('https://exo-engine.com/COMP4537/labs/5/api/v1/sql?query=SELECT%20*%20FROM%20patient', {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
-            })
-            .then(response => response.json())
-            .then(data => {
-                displayTable(data);
-            })
-            .catch(error => console.error('Error:', error));
-        });
-
-        submitQueryBtn.addEventListener('click', () => {
-            const query = document.getElementById('sqlQuery').value.trim();
-            const method = query.toLowerCase().startsWith('select') ? 'GET' : 'POST';
-            const url = method === 'GET' ? `https://exo-engine.com/COMP4537/labs/5/api/v1/sql?query=${encodeURIComponent(query)}` : 'https://exo-engine.com/COMP4537/labs/5/api/v1/sql';
-            const options = {
-                method,
-                headers: { 'Content-Type': 'application/json' }
-            };
-            if (method === 'POST') {
-                options.body = JSON.stringify({ query });
-            }
-
-            fetch(url, options)
-            .then(response => response.json())
-            .then(data => {
-                if (method === 'GET') {
-                    displayTable(data);
-                } else {
-                    responseDiv.textContent = JSON.stringify(data, null, 2);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-
-        function displayTable(data) {
-            if (!Array.isArray(data) || data.length === 0) {
-                responseDiv.textContent = 'No data available';
-                return;
-            }
-            
-            const table = document.createElement('table');
-            const thead = table.createTHead();
-            const tbody = table.createTBody();
-            const headerRow = thead.insertRow();
-
-            // Create table headers
-            Object.keys(data[0]).forEach(key => {
-                const th = document.createElement('th');
-                th.textContent = key;
-                headerRow.appendChild(th);
-            });
-
-            // Create table rows
-            data.forEach(row => {
-                const tr = tbody.insertRow();
-                Object.values(row).forEach(value => {
-                    const td = tr.insertCell();
-                    td.textContent = value;
-                });
-            });
-
-            // Clear previous content and display table
-            responseDiv.innerHTML = '';
-            responseDiv.appendChild(table);
-        }
-    </script>
 </body>
 </html>
