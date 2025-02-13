@@ -20,7 +20,6 @@
 </body>
 </html> -->
 
-<!-- Server1 code: server1/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,6 +30,7 @@
 <body>
     <h1>Patient Information</h1>
     <button id="insertDataBtn">Insert Data</button>
+    <button id="displayDataBtn">Display All Data</button>
     <br><br>
     <textarea id="sqlQuery" rows="4" cols="50"></textarea>
     <br>
@@ -39,6 +39,7 @@
     
     <script>
         const insertDataBtn = document.getElementById('insertDataBtn');
+        const displayDataBtn = document.getElementById('displayDataBtn');
         const submitQueryBtn = document.getElementById('submitQueryBtn');
         const responseDiv = document.getElementById('response');
 
@@ -55,6 +56,18 @@
             .then(response => response.json())
             .then(data => {
                 responseDiv.textContent = data.message;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        displayDataBtn.addEventListener('click', () => {
+            fetch('https://exo-engine.com/COMP4537/labs/5/api/v1/sql?query=SELECT%20*%20FROM%20patient', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                responseDiv.textContent = JSON.stringify(data, null, 2);
             })
             .catch(error => console.error('Error:', error));
         });
