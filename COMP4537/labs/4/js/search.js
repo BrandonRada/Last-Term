@@ -21,8 +21,8 @@ class Dictionary{
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState === 4 && (xhttp.status === 200 || xhttp.status === 201)) {
                 const response = JSON.parse(xhttp.responseText);
-                document.getElementById("searchResult").textContent = `${messages.missingSearchWord.replace("%1",response.word).replace("%2", response.definition)}`;
-            }else{
+                document.getElementById("searchResult").textContent = `${messages.searchResult.replace("%1",response.word).replace("%2", response.definition)}`;
+            }else if(xhttp.readyState === 4){
                 const response = JSON.parse(xhttp.responseText);
                 document.getElementById("searchResult").textContent = `${messages.requestError.replace("%1", response.requestCount).replace("%2", response.message)}`;
             }
