@@ -1,9 +1,9 @@
 class Database{
     constructor(){
-        const insertDataBtn = document.getElementById('insertDataBtn');
-        const displayDataBtn = document.getElementById('displayDataBtn');
-        const submitQueryBtn = document.getElementById('submitQueryBtn');
-        const responseDiv = document.getElementById('response');
+        this.insertDataBtn = document.getElementById('insertDataBtn');
+        this.displayDataBtn = document.getElementById('displayDataBtn');
+        this.submitQueryBtn = document.getElementById('submitQueryBtn');
+        this.responseDiv = document.getElementById('response');
 
         // Setup the buttons.
         this.setupInsertButton();
@@ -12,9 +12,11 @@ class Database{
     }
 
     setupInsertButton(){
+        const dataToInsert = document.getElementById("sqlQuery").value;
         this.insertDataBtn.addEventListener('click', () => {
             const data = {
                 query: `INSERT INTO patient (name, age, gender, \`condition\`) VALUES ('John Doe', 30, 'Male', 'Healthy'), ('Jane Smith', 28, 'Female', 'Healthy')`
+                // query: `${dataToInsert}`
             };
     
             fetch('https://exo-engine.com/COMP4537/labs/5/api/v1/sql', {
@@ -24,7 +26,7 @@ class Database{
             })
             .then(response => response.json())
             .then(data => {
-                responseDiv.textContent = data.message;
+                this.responseDiv.textContent = data.message;
             })
             .catch(error => console.error('Error:', error));
         });
@@ -71,7 +73,7 @@ class Database{
     
     displayTable(data) {
         if (!Array.isArray(data) || data.length === 0) {
-            responseDiv.textContent = 'No data available';
+            this.responseDiv.textContent = 'No data available';
             return;
         }
         
@@ -97,8 +99,8 @@ class Database{
         });
 
         // Clear previous content and display table
-        responseDiv.innerHTML = '';
-        responseDiv.appendChild(table);
+        this.responseDiv.innerHTML = '';
+        this.responseDiv.appendChild(table);
     }
     
 
