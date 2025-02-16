@@ -6,7 +6,7 @@ class Database
         this.displayDataBtn = document.getElementById('displayDataBtn');
         this.submitQueryBtn = document.getElementById('submitQueryBtn');
         this.responseDiv = document.getElementById('response');
-        this.sqlAPI = 'https://exo-engine.com/COMP4537/labs/5/api/v1/sql';
+        this.sqlAPI = 'https://server2.yourdomain.xyz/lab5/api/v1/sql';
         // Setup the buttons.
         this.setupInsertButton();
         this.setupSubmitButton();
@@ -15,14 +15,15 @@ class Database
 
     setupInsertButton = () => this.insertDataBtn.addEventListener('click', () =>
     {
-        const data =
-        {
-            query: `INSERT INTO patient (name, age, gender, \`condition\`) VALUES ('John Doe', 30, 'Male', 'Healthy'), ('Jane Smith', 28, 'Female', 'Healthy')`
-            // query: `${document.getElementById("sqlQuery").value}`
+        const data = {
+            query: `INSERT INTO patient (name, DateOfBirth) VALUES 
+                    ('Sara Brown', '1901-01-01'), 
+                    ('John Smith', '1941-01-01'), 
+                    ('Jack Ma', '1961-01-30'), 
+                    ('Elon Musk', '1999-01-01')`
         };
 
-        const options =
-        {
+        const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -30,7 +31,7 @@ class Database
 
         fetch(this.sqlAPI, options)
             .then(response => response.json())
-            .then(data => this.responseDiv.textContent = data.message)
+            .then(data => this.responseDiv.textContent = JSON.stringify(data, null, 2))
             .catch(error => console.error('Error:', error));
     });
 
@@ -39,30 +40,27 @@ class Database
         const query = document.getElementById('sqlQuery').value.trim();
         const method = query.toLowerCase().startsWith('select') ? 'GET' : 'POST';
         const url = method === 'GET' ? `${ this.sqlAPI }?query=${ encodeURIComponent(query) }` : this.sqlAPI;
-        const options =
-        {
+        const options = {
             method,
             headers: { 'Content-Type': 'application/json' }
         };
 
-        if (method === 'POST')
-            options.body = JSON.stringify({ query });
+        if (method === 'POST') options.body = JSON.stringify({ query });
 
         fetch(url, options)
             .then(response => response.json())
-            .then(data => method === 'GET' ? this.displayTable(data) : this.responseDiv.textContent = data.message)
+            .then(data => method === 'GET' ? this.displayTable(data) : this.responseDiv.textContent = JSON.stringify(data, null, 2))
             .catch(error => console.error('Error:', error));
     });
 
     setupDisplayDataButton = () => this.displayDataBtn.addEventListener('click', () =>
     {
-        const options =
-        {
+        const options = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         };
 
-        fetch(`${ this.sqlAPI }?query=SELECT%20*%20FROM%20patient`, options)
+        fetch(`${ this.sqlAPI }?query=SELECT * FROM patient`, options)
             .then(response => response.json())
             .then(data => this.displayTable(data))
             .catch(error => console.error('Error:', error));
