@@ -6,7 +6,7 @@ class Database
         this.displayDataBtn = document.getElementById('displayDataBtn');
         this.submitQueryBtn = document.getElementById('submitQueryBtn');
         this.responseDiv = document.getElementById('response');
-        this.sqlAPI = 'https://server2.yourdomain.xyz/lab5/api/v1/sql';
+        this.sqlAPI = 'https://exo-engine.com/COMP4537/labs/5/api/v1/sql';
         // Setup the buttons.
         this.setupInsertButton();
         this.setupSubmitButton();
