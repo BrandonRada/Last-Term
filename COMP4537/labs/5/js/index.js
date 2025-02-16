@@ -15,7 +15,8 @@ class Database
 
     setupInsertButton = () => this.insertDataBtn.addEventListener('click', () =>
     {
-        const data = {
+        const data = 
+        {
             query: `INSERT INTO patient (name, DateOfBirth) VALUES 
                     ('Sara Brown', '1901-01-01'), 
                     ('John Smith', '1941-01-01'), 
@@ -23,7 +24,8 @@ class Database
                     ('Elon Musk', '1999-01-01')`
         };
 
-        const options = {
+        const options = 
+        {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -31,7 +33,7 @@ class Database
 
         fetch(this.sqlAPI, options)
             .then(response => response.json())
-            .then(data => this.responseDiv.textContent = JSON.stringify(data, null, 2))
+            .then(data => this.responseDiv.textContent = data.message)
             .catch(error => console.error('Error:', error));
     });
 
@@ -40,22 +42,25 @@ class Database
         const query = document.getElementById('sqlQuery').value.trim();
         const method = query.toLowerCase().startsWith('select') ? 'GET' : 'POST';
         const url = method === 'GET' ? `${ this.sqlAPI }?query=${ encodeURIComponent(query) }` : this.sqlAPI;
-        const options = {
+        const options =
+        {
             method,
             headers: { 'Content-Type': 'application/json' }
         };
 
-        if (method === 'POST') options.body = JSON.stringify({ query });
+        if (method === 'POST')
+            options.body = JSON.stringify({ query });
 
         fetch(url, options)
             .then(response => response.json())
-            .then(data => method === 'GET' ? this.displayTable(data) : this.responseDiv.textContent = JSON.stringify(data, null, 2))
+            .then(data => method === 'GET' ? this.displayTable(data) : this.responseDiv.textContent = data.message)
             .catch(error => console.error('Error:', error));
     });
 
     setupDisplayDataButton = () => this.displayDataBtn.addEventListener('click', () =>
     {
-        const options = {
+        const options = 
+        {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         };
