@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab5 Patient Data</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Patient Info</title>
 </head>
-
 <body>
-    <h1>Patient Data Management</h1>
-    <button id="insertDataBtn">Insert Default Rows</button>
-    <div>
-        <textarea id="sqlQuery" rows="5" cols="50" placeholder="Enter your SQL query"></textarea><br>
-        <button id="submitQueryBtn">Submit Query</button>
-    </div>
-    <button id="displayDataBtn">Display Data</button>
+    <h1>Patient Information</h1>
+    <button id="insertDataBtn">Insert Data</button>
+    <button id="displayDataBtn">Display All Data</button>
+    <br><br>
+    <textarea id="sqlQuery" rows="4" cols="50"></textarea>
+    <br>
+    <button id="submitQueryBtn">Submit Query</button>
+    <br>
     <div id="response"></div>
-    <script src="redirect.js" defer></script>
-</body>
+    
+    <script  type="module" src="./js/index.js"></script>
 
+</body>
 </html>
