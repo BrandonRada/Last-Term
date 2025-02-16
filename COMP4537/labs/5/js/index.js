@@ -87,7 +87,11 @@ class Database
         });
 
         // Create table rows
-        data.forEach(row => Object.values(row).forEach(value => tbody.insertRow().insertCell().textContent = value));
+        data.forEach(row =>
+        {
+            const tableRow = tbody.insertRow();
+            Object.values(row).forEach(value => tableRow.insertCell().textContent = value);
+        });
 
         // Clear previous content and display table
         this.responseDiv.innerHTML = '';
