@@ -1,3 +1,5 @@
+// Code attribution: Copilot (https://copilot.microsoft.com/) was used to develop solutions presented in this assignment. This includes verifying that code met requirements, analyzing errors, checking/looking up syntax, and summarizing requirements.
+const msg = require('../lang/messages/en/user');
 class Database
 {
     constructor()
@@ -74,7 +76,7 @@ class Database
     displayTable(data)
     {
         if (!Array.isArray(data) || data.length === 0)
-            return this.responseDiv.textContent = 'No data available';
+            return this.responseDiv.textContent = msg.noData;
 
         const table = document.createElement('table');
         const thead = table.createTHead();
