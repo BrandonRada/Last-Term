@@ -1,5 +1,5 @@
 // Code attribution: Copilot (https://copilot.microsoft.com/) was used to develop solutions presented in this assignment. This includes verifying that code met requirements, analyzing errors, checking/looking up syntax, and summarizing requirements.
-import { noData } from '../lang/messages/en/user';
+import { noData } from '../lang/messages/en/user.js';
 class Database
 {
     constructor()
